@@ -1,0 +1,69 @@
+\hypertarget{string-utils_8h}{}\section{string-\/utils.h File Reference}
+\label{string-utils_8h}\index{string-\/utils.\+h@{string-\/utils.\+h}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{string-utils_8h_aebd1ff6ce580eecc97a5953c21bda0c4}{stra\+\_\+max}} (char $\ast$strs\mbox{[}$\,$\mbox{]}, int num)
+\item 
+string $\ast$ \mbox{\hyperlink{string-utils_8h_a4ee24c0111c7ab27836b907383575124}{allocate\+\_\+string\+\_\+array}} (int itemnum, int item\+\_\+length)
+\item 
+void \mbox{\hyperlink{string-utils_8h_a918fe39c23de1b58fb8d3cd4749455e3}{free\+\_\+string\+\_\+array}} (string $\ast$stra, int itemnum)
+\item 
+\mbox{\Hypertarget{string-utils_8h_a8763d575837b610b705e366611a3bb7c}\label{string-utils_8h_a8763d575837b610b705e366611a3bb7c}} 
+void {\bfseries strrmv} (string, int)
+\item 
+\mbox{\Hypertarget{string-utils_8h_a220db33a8f2f30e9a050c2d0b5a7decd}\label{string-utils_8h_a220db33a8f2f30e9a050c2d0b5a7decd}} 
+void {\bfseries strtrm} (string)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Utility function for manipulating strings and string arrays Mostly used by menu.\+h 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{string-utils_8h_a4ee24c0111c7ab27836b907383575124}\label{string-utils_8h_a4ee24c0111c7ab27836b907383575124}} 
+\index{string-\/utils.\+h@{string-\/utils.\+h}!allocate\+\_\+string\+\_\+array@{allocate\+\_\+string\+\_\+array}}
+\index{allocate\+\_\+string\+\_\+array@{allocate\+\_\+string\+\_\+array}!string-\/utils.\+h@{string-\/utils.\+h}}
+\subsubsection{\texorpdfstring{allocate\+\_\+string\+\_\+array()}{allocate\_string\_array()}}
+{\footnotesize\ttfamily string$\ast$ allocate\+\_\+string\+\_\+array (\begin{DoxyParamCaption}\item[{int}]{itemnum,  }\item[{int}]{item\+\_\+length }\end{DoxyParamCaption})}
+
+Allocates memory for a string array of {\ttfamily itemnum} items 
+\begin{DoxyParams}{Parameters}
+{\em itemnum} & Number of strings you want to store \\
+\hline
+{\em item\+\_\+length} & Maximum length of the string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the string array 
+\end{DoxyReturn}
+\mbox{\Hypertarget{string-utils_8h_a918fe39c23de1b58fb8d3cd4749455e3}\label{string-utils_8h_a918fe39c23de1b58fb8d3cd4749455e3}} 
+\index{string-\/utils.\+h@{string-\/utils.\+h}!free\+\_\+string\+\_\+array@{free\+\_\+string\+\_\+array}}
+\index{free\+\_\+string\+\_\+array@{free\+\_\+string\+\_\+array}!string-\/utils.\+h@{string-\/utils.\+h}}
+\subsubsection{\texorpdfstring{free\+\_\+string\+\_\+array()}{free\_string\_array()}}
+{\footnotesize\ttfamily void free\+\_\+string\+\_\+array (\begin{DoxyParamCaption}\item[{string $\ast$}]{stra,  }\item[{int}]{itemnum }\end{DoxyParamCaption})}
+
+Free a string array allocated with allocate\+\_\+string\+\_\+array 
+\begin{DoxyParams}{Parameters}
+{\em stra} & Pointer to the string array \\
+\hline
+{\em itemnum} & Number of items in the array \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{string-utils_8h_aebd1ff6ce580eecc97a5953c21bda0c4}\label{string-utils_8h_aebd1ff6ce580eecc97a5953c21bda0c4}} 
+\index{string-\/utils.\+h@{string-\/utils.\+h}!stra\+\_\+max@{stra\+\_\+max}}
+\index{stra\+\_\+max@{stra\+\_\+max}!string-\/utils.\+h@{string-\/utils.\+h}}
+\subsubsection{\texorpdfstring{stra\+\_\+max()}{stra\_max()}}
+{\footnotesize\ttfamily int stra\+\_\+max (\begin{DoxyParamCaption}\item[{char $\ast$}]{strs\mbox{[}$\,$\mbox{]},  }\item[{int}]{num }\end{DoxyParamCaption})}
+
+Function to determine the longest string\textquotesingle{}s length in an array of char arrays (string array) 
+\begin{DoxyParams}{Parameters}
+{\em strs} & Pointer to the string array \\
+\hline
+{\em num} & Number of items in the string array \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The length of the longest string in the array 
+\end{DoxyReturn}
