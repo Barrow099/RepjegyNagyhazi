@@ -1,0 +1,6 @@
+cmake-build-debug/
+./idea
+.idea/
+html/
+latex/
+doc/
