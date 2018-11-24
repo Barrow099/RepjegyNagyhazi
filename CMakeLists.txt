@@ -23,4 +23,5 @@ add_executable(nagyhazi
         string-utils.c
         string-utils.h
         strings.h
-        types.h)
+        types.h ListaTest.c FlightData/FlightBook.c FlightData/FlightBook.h FlightData/Structs.h)
+target_link_libraries(nagyhazi m)

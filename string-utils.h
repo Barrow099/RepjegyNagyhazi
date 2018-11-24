@@ -37,4 +37,34 @@ void free_string_array(string* stra, int itemnum);
 void strrmv(string, int);
 void strtrm(string);
 
+/**
+ * Counts the specified character in the string
+ * @param str The string
+ * @param charToFind The character you want to count
+ * @return Number of occurences
+ */
+int strcnt(string str, char charToFind);
+
+/**
+ * Removes all occurences of the specified character
+ * @param str The string
+ * @param charToRemove The character you want to remove
+ * @return A new string without the specified chars
+ */
+string strrmc(string str, char charToRemove);
+
+/**
+ * Calculates equal percentage of two strings
+ * @param str String
+ * @param ref Reference string. This cannot contain non-ASCII characters
+ * @return The equal percentage
+ */
+int streqq(string str, string ref);
+
+/**
+ * Changes every capital letter to lowercase
+ * @warning This function changes the letters in the original string
+ * @param str The string
+ */
+void strlow(string str);
 #endif //NAGYHAZI_STRING_UTILS_H

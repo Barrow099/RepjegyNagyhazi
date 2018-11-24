@@ -9,6 +9,7 @@
 #define NAGYHAZI_GENERICLIST_H
 
 #include <stdbool.h>
+#include "types.h"
 
 /**
  * Struct to store an item.
@@ -65,7 +66,14 @@ typedef struct GenericList {
      * @param list Pointer to the list you want to append
      * @param item Pointer to the item
      */
-    void (*append)(struct GenericList* list, void* item);
+    bool (*append)(struct GenericList* list, void* item);
+
+    /**
+     * Removes the item specified by the index from the list
+     * @param list The list
+     * @param index The index
+     */
+    void (*remove)(struct GenericList* list, int index);
 
 } GenericList;
 
@@ -74,11 +82,12 @@ typedef struct GenericList {
  * @return Pointer to the list
  */
 GenericList* gl_create_list();
-
 /**
  * Delete and free a list and its items
  * @param list Pointer to the list you want to delete
  */
 void gl_delete_list(GenericList* list);
+
+GenericList* gl_filter_text(GenericList *list, string (*pDataToString)(void* data), string text, int threshold);
 
 #endif //NAGYHAZI_GENERICLIST_H

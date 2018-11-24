@@ -8,22 +8,20 @@
 #include "../string-utils.h"
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 
 void make_box(int width, int height, EconioColor color);
-
 void make_box_offset(int startx, int starty, int width, int height, EconioColor color, int shadow);
-
 void make_window(int width, int height, int term_width, int term_height);
-
-void print_line_center(string text, int max_len, int x, int y, EconioColor bg, EconioColor fg);
-
+void print_line_center(string text, int max_len, int x, int y, EconioColor bg, EconioColor fg);\
 void print_sep(int length, int x, int y);
-
 int options_wait(string *options, int num, int x, int y, int len);
-
 void input_wait(int x, int y, int w, string *options, int optscount, string *return_values);
-
 void message_wait();
+
+int options_list_wait(OptionNode *pNode, int x, int y, int len) ;
+
+string intput_wait(int i, int i1, size_t i2);
 
 int menu_options(string question, string *options, int num) {
     econio_clrscr();
@@ -52,6 +50,50 @@ int menu_options(string question, string *options, int num) {
     econio_clrscr();
     econio_gotoxy(0, 0);
     return c;
+}
+string menu_input(string question) {
+    econio_clrscr();
+    econio_rawmode();
+
+    int height = 9;
+    int width = (int) (4 + 2 + strlen(question));
+    width = width > 20 ? width : 20;
+
+    make_box(80, 25, BLUE);
+    make_window(width, height, 80, 24);
+
+    //Window start pos
+    int startx = (80 / 2) - (width / 2);
+    int starty = (25 / 2) - (height / 2);
+
+    print_line_center(question, width - 2, startx + 1, starty + 2, LIGHTGRAY, BLACK);
+    print_line_center("<OK>", width - 2, startx + 1, starty + 6, RED, WHITE);
+
+    string s = intput_wait(startx + 3, starty + 4, width - 5);
+
+    //Restore terminal
+
+    econio_normalmode();
+    econio_textcolor(WHITE);
+    econio_textbackground(BLACK);
+    econio_clrscr();
+    econio_gotoxy(0, 0);
+    return s;
+}
+
+string intput_wait(int x, int y, size_t len) {
+    char* str = malloc(sizeof(char) * 128);
+    econio_gotoxy(x,y);
+    econio_textbackground(LIGHTBLUE);
+    econio_textcolor(WHITE);
+    for(int i = 0; i < len; i++) {
+        printf("_");
+    }
+    econio_gotoxy(x,y);
+    econio_normalmode();
+    scanf("%[^\n]",str);
+    econio_rawmode();
+    return str;
 }
 
 void menu_message(string message) {
@@ -82,15 +124,36 @@ void menu_message(string message) {
     econio_clrscr();
     econio_gotoxy(0, 0);
 }
+int menu_options_list(string question, OptionNode *listHead) {
 
-void *
-menu_input_list(string question, bool (*pfV)(string *, string), void *(*pvC)(string *), string *options, int num) {
+    int max = 0;
+    OptionNode* p = listHead;
+    while(p) {
+        if(strlen(p->value) + 7 > max)
+            max = strlen(p->value) + 7;
+        p = p->nextNode;
+    }
+    int width = max + 10;
+    int height = 2 + 1 + 6 + 3 + 1;
+    int startx = (80 / 2) - (width / 2);
+    int starty = (25 / 2) - (height / 2);
+    econio_clrscr();
+    econio_rawmode();
+    make_box(80, 25, BLUE);
+    make_window(width, height, 80, 24);
+    print_line_center(question, width - 7, startx + 1, starty + 1, LIGHTGRAY, BLACK);
+    print_sep(width, startx, starty + 2);
+    econio_flush();
+    return options_list_wait(listHead, startx + 1, starty + 3, width - 10);
+}
+void * menu_input_list(string question, bool (*pfV)(string *, string), void *(*pvC)(string *), string *options, int num) {
     int height = 2 + 1 + num + 3 + 1;
     //Window start pos
     int startx = (80 / 2) - (60 / 2);
     int starty = (25 / 2) - (height / 2);
 
-    string *res = allocate_string_array(6, 64);
+
+    string *res = allocate_string_array(num, 64);
 
     bool bad = true;
     while (bad) {
@@ -100,14 +163,14 @@ menu_input_list(string question, bool (*pfV)(string *, string), void *(*pvC)(str
         make_window(60, height, 80, 24);
         print_line_center(question, 58, startx + 1, starty + 1, LIGHTGRAY, BLACK);
         print_sep(60, startx, starty + 2);
-        input_wait(startx + 1, starty + 3, 52, options, 6, res);
+        input_wait(startx + 1, starty + 3, 52, options, num, res);
         char msg[64];
         bad = !pfV(res, msg);
         if (bad)
             menu_message(msg);
     }
     void *data = pvC(res);
-    free_string_array(res, 6);
+    free_string_array(res, num);
     econio_normalmode();
     econio_textcolor(WHITE);
     econio_textbackground(BLACK);
@@ -115,6 +178,7 @@ menu_input_list(string question, bool (*pfV)(string *, string), void *(*pvC)(str
     econio_gotoxy(0, 0);
     return data;
 }
+
 
 
 //Private helpers
@@ -210,14 +274,99 @@ void print_sep(int length, int x, int y) {
 }
 
 
+int options_list_wait(OptionNode *pNode, int x, int y, int len) {
+    int startx = x + 1;
+    int choice = -1;
+    int current = 0;
+    int current_index = 0;
+    int viewStart = 0;
+
+    int item_count = 1;
+    OptionNode* head = pNode;
+    while(head->nextNode) {
+        item_count++;
+        head = head->nextNode;
+    }
+
+    while(choice == -1) {
+        OptionNode* node = pNode;
+        int index = 0;
+        //Skip to view start
+        while(index < viewStart && index < item_count) {
+            node = node->nextNode;
+            index++;
+        }
+        while (index - viewStart < 7 && index < item_count) {
+            string text = node->value;
+            char sel[4];
+            if(index == current_index) {
+                strcpy(sel, "[*]");
+                econio_textbackground(WHITE);
+                econio_textcolor(BLUE);
+            }else {
+                sprintf(sel, "[%d]", index);
+                econio_textcolor(WHITE);
+                econio_textbackground(BLUE);
+
+            }
+            econio_gotoxy(startx,y + (index - viewStart));
+            char msg[192];
+            sprintf(msg,"%s %s",sel,text);
+            printf("%s",msg);
+            for (int i = 0; i < len - (int)strlen(msg) && len - (int)strlen(msg) > 0; i++) {
+                printf(" ");
+            }
+            index++;
+            econio_flush();
+            node = node->nextNode;
+        }
+
+        //Draw scrollbar
+        econio_textcolor(DARKGRAY);
+        econio_textbackground(DARKGRAY);
+        for(int i = 0; i < 7;i++) {
+            econio_gotoxy(startx + len - 1, y + i);
+            printf(" ");
+        }
+        econio_textbackground(BLACK);
+        econio_textcolor(BLACK);
+        int progress = floor((double )current_index / ((double )item_count) * 7.0);
+        int py = y + progress;
+        econio_gotoxy(startx + len - 1, py);
+        printf(" ");
+        econio_flush();
+
+
+        int ch = econio_getch();
+        switch (ch) {
+            case ENTER: choice = current_index;
+                break;
+            case UP:
+                current_index--;
+                if(current_index < 0)
+                    current_index = 0;
+                if(current_index < viewStart)
+                    viewStart--;
+                break;
+            case DOWN:
+                current_index++;
+                if(current_index > item_count -1)
+                    current_index = item_count - 1;
+                if(current_index > viewStart + 6)
+                    viewStart++;
+                break;
+            case ESCAPE:
+                return -1;
+            default: break;
+        }
+    }
+}
+
 int options_wait(string *options, int num, int x, int y, int len) {
     int startx = x + 1;
     int choice = -1;
     int current = 0;
-
     int max = len;
-
-
     while (choice == -1) {
         for (int c = 0; c < num; c++) {
             string text = options[c];
