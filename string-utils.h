@@ -3,68 +3,72 @@
 //
 /**
  * @file string-utils.h
- * Utility function for manipulating strings and string arrays
- * Mostly used by menu.h
+ * Sztring manipulálási segédfüggvények gzűjteménye
+ * Nagzrészben a grafikus menürendszer segédfüggvényei
  */
 
 #ifndef NAGYHAZI_STRING_UTILS_H
 #define NAGYHAZI_STRING_UTILS_H
 
-#include "types.h"
+typedef char* string;
 
 /**
- * Function to determine the longest string's length in an array of char arrays (string array)
- * @param strs Pointer to the string array
- * @param num Number of items in the string array
- * @return The length of the longest string in the array
+ * Egy sztring-tömbbről megmondja a leghosszabb elem hosszát
+ * @param strs Sztring tömb pointer
+ * @param num Sztring tömb eleminek száma
+ * @return A lehosszabb elem hossza
  */
 int stra_max(char *strs[], int num);
 
 /**
- * Allocates memory for a string array of `itemnum` items
- * @param itemnum Number of strings you want to store
- * @param item_length Maximum length of the string
- * @return Pointer to the string array
+ * Lefoglalja a megfelelő méretű memóriaterületet egz itemnum elemű sztringtömb számára
+ * @param itemnum A tömb eleminek száma
+ * @param item_length Egy elem maximális hossza
+ * @return Pointer a sztringtömbre
  */
 string* allocate_string_array(int itemnum, int item_length);
 
 /**
- * Free a string array allocated with allocate_string_array
- * @param stra Pointer to the string array
- * @param itemnum Number of items in the array
+ * Felszabadít egz sztringtömböt és elemeit
+ * @param stra Pointer a tömbre
+ * @param itemnum A tömb elemeinek száma
  */
 void free_string_array(string* stra, int itemnum);
-void strrmv(string, int);
-void strtrm(string);
 
 /**
- * Counts the specified character in the string
- * @param str The string
- * @param charToFind The character you want to count
- * @return Number of occurences
+ * Szóköz karakterek eltávolítása sztringekből
+ * @param str A sztring
+ */
+void strtrm(string str);
+
+/**
+ * Megszámolja egy bizonyos karakter előfordulásinak számát egy sztringben
+ * @param str A sztring
+ * @param charToFind A karakter
+ * @return Az előfordulások száma
  */
 int strcnt(string str, char charToFind);
 
 /**
- * Removes all occurences of the specified character
- * @param str The string
- * @param charToRemove The character you want to remove
- * @return A new string without the specified chars
+ * Eltávolít egy bizonyos karaktert a sztringből
+ * @param str A sztring
+ * @param charToRemove Az eltávolítani kívánt karakter
+ * @return Az új szöveg a karakterek nélkül
  */
 string strrmc(string str, char charToRemove);
 
 /**
- * Calculates equal percentage of two strings
- * @param str String
- * @param ref Reference string. This cannot contain non-ASCII characters
- * @return The equal percentage
+ * Kiszámolja két sztring hasonlóságának százalékát
+ * @param str A sztring
+ * @param ref A referenciaszöveg
+ * @return A hasonlóság százaléka
  */
 int streqq(string str, string ref);
 
 /**
- * Changes every capital letter to lowercase
- * @warning This function changes the letters in the original string
- * @param str The string
+ * Kicserél minden nagybetűt kisbetűre egz sztringben
+ * @warning Ez a függvény módosítja a kapott sztringet
+ * @param str A sztring
  */
 void strlow(string str);
 #endif //NAGYHAZI_STRING_UTILS_H

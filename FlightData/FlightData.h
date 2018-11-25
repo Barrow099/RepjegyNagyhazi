@@ -9,7 +9,7 @@
 
 
 #include <GenericList.h>
-#include "../types.h"
+#include "string-utils.h"
 #include "Structs.h"
 
 

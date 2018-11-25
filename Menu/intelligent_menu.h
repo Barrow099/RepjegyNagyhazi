@@ -3,7 +3,7 @@
 //
 
 #include <stdbool.h>
-#include "../types.h"
+#include "string-utils.h"
 
 #ifndef NAGYHAZI_VARG_MENU_H
 #define NAGYHAZI_VARG_MENU_H

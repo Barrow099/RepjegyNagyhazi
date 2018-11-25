@@ -9,7 +9,7 @@
 #define NAGYHAZI_GENERICLIST_H
 
 #include <stdbool.h>
-#include "types.h"
+
 
 /**
  * Struct to store an item.
@@ -88,6 +88,6 @@ GenericList* gl_create_list();
  */
 void gl_delete_list(GenericList* list);
 
-GenericList* gl_filter_text(GenericList *list, string (*pDataToString)(void* data), string text, int threshold);
+GenericList* gl_filter_text(GenericList *list, char* (*pDataToString)(void* data), char* text, int threshold);
 
 #endif //NAGYHAZI_GENERICLIST_H

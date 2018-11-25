@@ -6,8 +6,9 @@
 
 #ifndef NAGYHAZI_MENU_H
 #define NAGYHAZI_MENU_H
-#include "../types.h"
+
 #include <stdbool.h>
+#include <string-utils.h>
 
 typedef struct OptionNode {
     struct OptionNode* nextNode;

@@ -32,15 +32,7 @@ void free_string_array(string *array, int count) {
     free(array);
 }
 
-void strrmv(string str, int index) {
-    string new = malloc(strlen(str) * sizeof(char));
-    strncpy(new, str, (size_t) index);
-    string after = str + index + 1;
-    strcat(new, after);
-    memset(str, 0, strlen(str));
-    memcpy(str, new, strlen(new));
-    free(new);
-}
+
 
 void strtrm(string str) {
     string s = malloc(strlen(str) * sizeof(char));
