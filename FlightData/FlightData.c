@@ -155,6 +155,8 @@ void list_flights(RuntimeState *pState) {
     int ch = varg_options_menu_generator("Menett jaratok. Nyomjon escapet a visszalepeshez", pState->flight_list,
                                          pState->flight_list->size(pState->flight_list), &lsf_get_item_by_index,
                                          &lsf_tostring_data);
+    if(ch == -1)
+        return;
     FlightData* flight = pState->flight_list->get_item(pState->flight_list, ch);
     if(flight) {
         int used_seats = flight->seats_taken;
