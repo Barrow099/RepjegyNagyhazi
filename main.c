@@ -1,4 +1,12 @@
+//
+// Create by barrow099 on ??.??
+//
 
+/**
+ * @file main.c
+ *  Main modul
+ *  A progarm fő működését és a menürendszer egy részének funkcióit biztosítja
+ */
 #include <Menu/intelligent_menu.h>
 #include <Structs.h>
 #include <c-econio/econio.h>
@@ -13,9 +21,15 @@
 
 
 
-
+/**
+ * Windowsos működéshez szükséges feladatok elvégzése
+ */
 void win_init();
 
+/**
+ * Main belépési pont
+ * @return
+ */
 int main() {
 
     //Load stored data
@@ -72,13 +86,15 @@ int main() {
 
                 }
             }
-        }else {
-            fb_save_to_file(&runtimeState);
-            fd_save_to_file(&runtimeState);
-            gl_delete_list(runtimeState.book_list);
-            gl_delete_list(runtimeState.flight_list);
         }
+        else
+            break;
     }
+    fb_save_to_file(&runtimeState);
+    fd_save_to_file(&runtimeState);
+    gl_delete_list(runtimeState.book_list);
+    gl_delete_list(runtimeState.flight_list);
+    return 0;
 }
 
 

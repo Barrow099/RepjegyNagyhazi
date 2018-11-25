@@ -25,12 +25,12 @@ int varg_options_menu(string question, ...) {
 }
 
 void *varg_input_menu(string question,
-                      bool (*pfValidator)(string *,string),
-                      void *(*pfCreator)(string *), ...) {
+                      bool (*pValidate)(string *,string),
+                      void *(*pCreateData)(string *), ...) {
     va_list list;
     //assume max 16 items
     char* lst[16];
-    va_start(list,pfCreator);
+    va_start(list,pCreateData);
     char* arg = va_arg(list,char*);
     lst[0] = arg;
     int counter = 1;
@@ -39,7 +39,7 @@ void *varg_input_menu(string question,
         lst[counter++] = arg;
     }
     va_end(list);
-    return menu_input_list(question,pfValidator, pfCreator, lst, counter - 1);
+    return menu_input_list(question,pValidate, pCreateData, lst, counter - 1);
 }
 
 
