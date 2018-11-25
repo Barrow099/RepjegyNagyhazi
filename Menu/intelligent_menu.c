@@ -64,7 +64,15 @@ int varg_options_menu_generator(string question,
         prevItem->nextNode = item;
         prevItem = item;
     }
-    return menu_options_list(question, HEAD);
+    int i = menu_options_list(question, HEAD);
+    OptionNode *next = NULL;
+    OptionNode *curr = HEAD;
+    while(curr) {
+        next = curr->nextNode;
+        free(curr);
+        curr = next;
+    }
+    return i;
 
 }
 

@@ -14,4 +14,11 @@ void fb_save_to_file(RuntimeState* pState);
 FlightBook *fb_alloc_book();
 void fb_free_book(FlightBook *book);
 
+void book_flight(RuntimeState* pState);
+
+void do_book_flight(FlightData *data, RuntimeState* pState);
+
+void finalize_book(RuntimeState *pState);
+
+
 #endif //NAGYHAZI_FLIGHTBOOK_H
