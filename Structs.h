@@ -2,20 +2,35 @@
 // Created by barrow099 on 11/24/18.
 //
 
+/**
+ * @file Structs.h
+ * A programohoz szükséges adatstruktúrák
+ */
+
 #ifndef NAGYHAZI_STRUCTS_H
 #define NAGYHAZI_STRUCTS_H
 
-#include <GenericList.h>
+#include "string-utils.h"
+#include "GenericList.h"
 
+/**
+ * Menü típusok
+ */
 typedef enum Menus {
     NORMAL, VEGAN, LAKTOZ
 } Menus;
 
+/**
+ * A program futás közbeni állapotát tárolja, a járatok és foglalások listáját
+ */
 typedef struct RuntimeState {
     GenericList *flight_list;
     GenericList *book_list;
 } RuntimeState;
 
+/**
+ * Egy foglalás adatait tárol
+ */
 typedef struct FlightBook {
     string name;
     string email;
@@ -24,6 +39,10 @@ typedef struct FlightBook {
     int seat;
 } FlightBook;
 
+
+/**
+ * Egy járat adatait tárolja
+ */
 typedef struct FlightData {
     string from;
     string to;

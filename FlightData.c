@@ -4,9 +4,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <Menu/menu.h>
+#include <menu.h>
 #include <string-utils.h>
-#include <Menu/intelligent_menu.h>
+#include <intelligent_menu.h>
 #include <string.h>
 #include "FlightData.h"
 #include "FlightBook.h"

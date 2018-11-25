@@ -2,7 +2,7 @@
 // Created by barrow099 on 10/9/18.
 //
 /**
- * @file Grafikus menürendszer
+ * @file menu.h
  * Egy parancssoros grafikus menürendszer megvalósítása
  */
 
@@ -23,7 +23,7 @@ typedef struct OptionNode {
      */
     struct OptionNode* nextNode;
     /**
-     * sztroing érték
+     * sztring érték
      */
     string value;
 } OptionNode;

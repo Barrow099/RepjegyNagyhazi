@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 #include "menu.h"
-#include "../c-econio/econio.h"
-#include "../string-utils.h"
+#include "c-econio/econio.h"
+#include "string-utils.h"
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>

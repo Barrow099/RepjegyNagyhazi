@@ -7,12 +7,12 @@
  *  Main modul
  *  A progarm fő működését és a menürendszer egy részének funkcióit biztosítja
  */
-#include <Menu/intelligent_menu.h>
+#include <intelligent_menu.h>
 #include <Structs.h>
 #include <c-econio/econio.h>
 #include <stdlib.h>
-#include <FlightData/FlightData.h>
-#include <FlightData/FlightBook.h>
+#include <FlightData.h>
+#include <FlightBook.h>
 
 
 #ifdef _WIN32

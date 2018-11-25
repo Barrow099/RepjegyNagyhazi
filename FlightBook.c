@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <string-utils.h>
-#include <Menu/menu.h>
-#include <Menu/intelligent_menu.h>
+#include <menu.h>
+#include <intelligent_menu.h>
 #include "FlightBook.h"
 #include "FlightData.h"
 
