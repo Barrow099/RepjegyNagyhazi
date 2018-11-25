@@ -133,6 +133,7 @@ int menu_options_list(string question, OptionNode *listHead) {
             max = strlen(p->value) + 7;
         p = p->nextNode;
     }
+    max = strlen(question) > max ? strlen(question) : max;
     int width = max + 10;
     int height = 2 + 1 + 6 + 3 + 1;
     int startx = (80 / 2) - (width / 2);
