@@ -3,7 +3,7 @@
 //
 /**
  * @file GenericList.h
- * Implements a generic linked list
+ * Egy generikus (void*) linkelt lista megvalósítás
  */
 #ifndef NAGYHAZI_GENERICLIST_H
 #define NAGYHAZI_GENERICLIST_H
@@ -12,82 +12,91 @@
 
 
 /**
- * Struct to store an item.
- * It has a generic pointer value and a pointer to the next item
+ * Egy listaelem tárolására szolgáló struktúra
+ * Tartalmaz egy értékpointert és egy pointert a következő elemre
  */
 typedef struct GenericItem {
     /**
-     * Pointer to the item value
+     * Értékpointer
      */
     void* value;
 
     /**
-     * Pointer to the next item in the list
+     * Pointer a lista következő elemére
      */
     struct GenericItem* next_item;
 } GenericItem;
 
 /**
- * Struct to store a generic list
- * It has an item pointer to the list head and function pointers to utility functions
+ * Egy generikus lista tárolására szolgáló struktúra
+ * Tartalmaz egy pointert az első elemre és függvénypointereket a lista kezelésére az áttekinthetőség kedvéért
  */
 typedef struct GenericList {
     GenericItem* HEAD;
     //Functions
 
     /**
-     * Funtion to get an item from a list
-     * @param lst A pointer to a generic list
-     * @param index Index of the item
-     * @return A generic pointer to the value
+     * Egy listaelem lekérése
+     * @param lst A pointer a listára
+     * @param index Az elem indexe
+     * @return Egy void* az értékre vagy NULL
      */
     void *(*get_item)(struct GenericList * lst, int index);
 
 
     /**
-     * Function to insert a value to a generic list
-     * @param list A pointer to a generic list
-     * @param item Pointer to the value you want to insert
-     * @param index Index of the place where the item will be placed
-     * @return True if the insertion was successful
+     * Érték beszúrása a listába
+     * @param list A pointer a listára
+     * @param item Értékpointer
+     * @param index A beszúrás helzének indexe
+     * @return true, ha sikeres volt a beszúrás
      */
     bool (*insert)(struct GenericList* list, void* item, int index);
 
 
     /**
-     * Gets the size of a generic list
-     * @param list The list
-     * @return The size
+     * A lista méretének lekérése
+     * @param list A lista
+     * @return A lista mérete
      */
     int (*size)(struct GenericList* list);
 
     /**
-     * Appends item to the end of the list
-     * @param list Pointer to the list you want to append
-     * @param item Pointer to the item
+     * Elem hozzáfűzése a lista végéhez
+     * @param list Lista pointer
+     * @param item Értékpointer
+     * @return true, ha sikerült a hozzáfűzés
      */
     bool (*append)(struct GenericList* list, void* item);
 
     /**
-     * Removes the item specified by the index from the list
-     * @param list The list
-     * @param index The index
+     * Egy eghatározott listaelem törlése
+     * @param list A lista
+     * @param index A törölni kívánt elem indexe
      */
     void (*remove)(struct GenericList* list, int index);
 
 } GenericList;
 
 /**
- * Create a empty list
- * @return Pointer to the list
+ * üres lista létrehozása
+ * @return Pointer a listára
  */
 GenericList* gl_create_list();
 /**
- * Delete and free a list and its items
- * @param list Pointer to the list you want to delete
+ * Egy listának és elemeinek felszabadítása
+ * @param list Pointer a listára
  */
 void gl_delete_list(GenericList* list);
 
+/**
+ * Egy generikus lista eleminek szűrése szöveggé alakítás után egyezési százalék alapján
+ * @param list A lista
+ * @param pDataToString Függvénypointer egy elem szöveggé alakítására
+ * @param text A referenciaszöveg
+ * @param threshold A százalékérték-küszöb
+ * @return Egy új lista a szűrt elemekkel
+ */
 GenericList* gl_filter_text(GenericList *list, char* (*pDataToString)(void* data), char* text, int threshold);
 
 #endif //NAGYHAZI_GENERICLIST_H
